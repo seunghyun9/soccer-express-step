@@ -18,8 +18,7 @@ export default function UserModel(mongoose) {
         userSchema.pre("save", function (next) {
             let user = this;
             //model 안의 paswsword가 변환될때만 암호화
-            //if (user.isModified("password")) {
-            const saltRounds=20
+            if (user.isModified("password")) {
               bcrypt.genSalt(saltRounds, function (err, salt) {
                 if (err) return next(err);
                 bcrypt.hash(user.password, salt, function (err, hash) {
@@ -28,16 +27,16 @@ export default function UserModel(mongoose) {
                   next();
                 });
               });
-            //} else {
-             // next();
-            //}
+            } else {
+              next();
+            }
           });
-          userSchema.methods.comparePassword = function (plainPassword, cb) {
+        userSchema.methods.comparePassword = function (plainPassword, cb) {
             //cb는 (err,isMatch)이다. plainPassword 유저가 입력한 password
             console.log(' >> plainPassword >> ' + plainPassword)
             console.log(' >> this.password >> ' + this.password)
             let isMatch = false
-            if (bcrypt.compareSync(plainPassword, this.password)) {
+            if (plainPassword === this.password) {
                 console.log(' >> plainPassword===this.password >> ')
                 isMatch = true
             } else {

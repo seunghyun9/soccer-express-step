@@ -45,7 +45,9 @@ export default function UserService() {
                             .status(204)
                             .send();
                     }
-                }) */
+                }) 
+                ********** TEST ***********
+                */
         },
         login(req, res) {
             User.findOne({
