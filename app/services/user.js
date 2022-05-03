@@ -45,9 +45,7 @@ export default function UserService() {
                             .status(204)
                             .send();
                     }
-                }) 
-                ********** TEST ***********
-                */
+                }) */
         },
         login(req, res) {
             User.findOne({
@@ -108,6 +106,7 @@ export default function UserService() {
                 }) */
         },
         logout() {
+            console.log(`서버 로그아웃 `);
             req.logout();
             res.json({success: true, msg: '로그아웃'});
 
